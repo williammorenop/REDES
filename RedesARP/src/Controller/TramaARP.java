@@ -108,7 +108,7 @@ public class TramaARP extends Packet {
                 break;
         }
 
-        return buf.toString() +;
+        return buf.toString() ;
     }
 
 }
