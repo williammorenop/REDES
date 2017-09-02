@@ -5,34 +5,35 @@ import java.util.StringTokenizer;
 import jpcap.packet.Packet;
 
 public class TramaARP extends Packet {
-  public static final short ETHERNET_TYPE= 1;
-  public static final short IEEE802_TYPE = 6;
-  public static final short  FREAMERELAY_TYPE =  15;
+  private static final long serialVersionUID = 3271911802471786372L;
+  public static final short HARDTYPE_ETHER= 1;
+  public static final short HARDTYPE_IEEE802 = 6;
+  public static final short  HARDTYPE_FRAMERELAY =  15;
   public static final short TYPE_PROTOCOL = 2048;
    public static final short ARP_REQUEST = 1;
    public static final short ARP_REPLY = 2;
    public static final short RARP_REQUEST = 3;
    public static final short RARP_REPLY = 4;
-private short typeProtocol;
-  public short hardwareAddressLenght;
-  public short ipAddressLenght;
+   public short hardtype;
+  private short prototype;
+  public short hlen;
+  public short plen;
   public short operation;
-  public byte[] senderHardwareAddress;
-  public byte[] senderIpAddress;
-  public byte[] targetHardwareAddress;
-  public byte[] targetIpAddress;
-  public short hardwareType;
+  public byte[] sender_hardaddr;
+  public byte[] sender_protoaddr;
+  public byte[] target_hardaddr;
+  public byte[] target_protoaddr;
   public short MAX_LENGHT = 6;
 
   //Cuando llega en string
-  public void setSenderHardwareAddress(String _senderHardwareAddress)
+  public void setSender_hardaddr(String _sender_hardaddr)
   {
-    StringTokenizer tokens = new StringTokenizer(_senderHardwareAddress, ":");
-    senderHardwareAddress = new byte[MAX_LENGHT];
+    StringTokenizer tokens = new StringTokenizer(_sender_hardaddr, ":");
+    sender_hardaddr = new byte[MAX_LENGHT];
     int pos = 0;
     while( tokens.hasMoreElements() )
     {
-      senderHardwareAddress[ pos ] = convertString(tokens.nextElement().toString());;
+      sender_hardaddr[ pos ] = convertString(tokens.nextElement().toString());;
       pos++;
     }
   }
@@ -73,70 +74,70 @@ private short typeProtocol;
   }
   public String[] getSenderHardwareAdrresString()
   {
-    String[] ret = new String[hardwareAddressLenght];
-    for( int i = 0  ; i < hardwareAddressLenght ; ++i )
+    String[] ret = new String[hlen];
+    for( int i = 0  ; i < hlen ; ++i )
     {
-      ret[ i ] = harToString(senderHardwareAddress[i]);
+      ret[ i ] = harToString(sender_hardaddr[i]);
     }
     return ret;
   }
   public String[] getTargetHardwareAdrresString()
   {
-    String[] ret = new String[hardwareAddressLenght];
-    for( int i = 0  ; i < hardwareAddressLenght ; ++i )
+    String[] ret = new String[hlen];
+    for( int i = 0  ; i < hlen ; ++i )
     {
-      ret[ i ] = harToString(targetHardwareAddress[i]);
+      ret[ i ] = harToString(target_hardaddr[i]);
     }
     return ret;
   }
- 
+
   /**
- * @return the hardwareType
+ * @return the hardtype
  */
-public short getHardwareType() {
-	return hardwareType;
+public short getHardtype() {
+	return hardtype;
 }
 /**
- * @param hardwareType the hardwareType to set
+ * @param hardtype the hardtype to set
  */
-public void setHardwareType(short hardwareType) {
-	this.hardwareType = hardwareType;
+public void setHardtype(short hardtype) {
+	this.hardtype = hardtype;
 }
 /**
- * @return the typeProtocol
+ * @return the prototype
  */
-public short getTypeProtocol() {
-	return typeProtocol;
+public short getPrototype() {
+	return prototype;
 }
 /**
- * @param typeProtocol the typeProtocol to set
+ * @param prototype the prototype to set
  */
-public void setTypeProtocol(short typeProtocol) {
-	this.typeProtocol = typeProtocol;
+public void setPrototype(short prototype) {
+	this.prototype = prototype;
 }
 /**
- * @return the hardwareAddressLenght
+ * @return the hlen
  */
-public short getHardwareAddressLenght() {
-	return hardwareAddressLenght;
+public short getHlen() {
+	return hlen;
 }
 /**
- * @param hardwareAddressLenght the hardwareAddressLenght to set
+ * @param hlen the hlen to set
  */
-public void setHardwareAddressLenght(short hardwareAddressLenght) {
-	this.hardwareAddressLenght = hardwareAddressLenght;
+public void setHlen(short hlen) {
+	this.hlen = hlen;
 }
 /**
- * @return the ipAddressLenght
+ * @return the plen
  */
-public short getIpAddressLenght() {
-	return ipAddressLenght;
+public short getPlen() {
+	return plen;
 }
 /**
- * @param ipAddressLenght the ipAddressLenght to set
+ * @param plen the plen to set
  */
-public void setIpAddressLenght(short ipAddressLenght) {
-	this.ipAddressLenght = ipAddressLenght;
+public void setPlen(short plen) {
+	this.plen = plen;
 }
 /**
  * @return the operation
@@ -151,52 +152,52 @@ public void setOperation(short operation) {
 	this.operation = operation;
 }
 /**
- * @return the senderHardwareAddress
+ * @return the sender_hardaddr
  */
-public byte[] getSenderHardwareAddress() {
-	return senderHardwareAddress;
+public byte[] getSender_hardaddr() {
+	return sender_hardaddr;
 }
 /**
- * @param senderHardwareAddress the senderHardwareAddress to set
+ * @param sender_hardaddr the sender_hardaddr to set
  */
-public void setSenderHardwareAddress(byte[] senderHardwareAddress) {
-	this.senderHardwareAddress = senderHardwareAddress;
+public void setSender_hardaddr(byte[] sender_hardaddr) {
+	this.sender_hardaddr = sender_hardaddr;
 }
 /**
- * @return the senderIpAddress
+ * @return the sender_protoaddr
  */
-public byte[] getSenderIpAddress() {
-	return senderIpAddress;
+public byte[] getSender_protoaddr() {
+	return sender_protoaddr;
 }
 /**
- * @param senderIpAddress the senderIpAddress to set
+ * @param sender_protoaddr the sender_protoaddr to set
  */
-public void setSenderIpAddress(byte[] senderIpAddress) {
-	this.senderIpAddress = senderIpAddress;
+public void setSender_protoaddr(byte[] sender_protoaddr) {
+	this.sender_protoaddr = sender_protoaddr;
 }
 /**
- * @return the targetHardwareAddress
+ * @return the target_hardaddr
  */
-public byte[] getTargetHardwareAddress() {
-	return targetHardwareAddress;
+public byte[] getTarget_hardaddr() {
+	return target_hardaddr;
 }
 /**
- * @param targetHardwareAddress the targetHardwareAddress to set
+ * @param target_hardaddr the target_hardaddr to set
  */
-public void setTargetHardwareAddress(byte[] targetHardwareAddress) {
-	this.targetHardwareAddress = targetHardwareAddress;
+public void setTarget_hardaddr(byte[] target_hardaddr) {
+	this.target_hardaddr = target_hardaddr;
 }
 /**
- * @return the targetIpAddress
+ * @return the target_protoaddr
  */
-public byte[] getTargetIpAddress() {
-	return targetIpAddress;
+public byte[] getTarget_protoaddr() {
+	return target_protoaddr;
 }
 /**
- * @param targetIpAddress the targetIpAddress to set
+ * @param target_protoaddr the target_protoaddr to set
  */
-public void setTargetIpAddress(byte[] targetIpAddress) {
-	this.targetIpAddress = targetIpAddress;
+public void setTarget_protoaddr(byte[] target_protoaddr) {
+	this.target_protoaddr = target_protoaddr;
 }
   public String toString() {
         String buf="";

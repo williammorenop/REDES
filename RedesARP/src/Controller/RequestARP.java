@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package Controller;
 
@@ -25,7 +25,7 @@ public class RequestARP {
 		NetworkInterface[] listaipred=JpcapCaptor.getDeviceList();
 		System.out.println(listaipred);
 		NetworkInterface device=null;
-		
+
 loop:	for(NetworkInterface f:listaipred){
 			for(NetworkInterfaceAddress direc:f.addresses){
 				System.out.println(direc);
@@ -51,15 +51,15 @@ loop:	for(NetworkInterface f:listaipred){
 				}
 			}
 		}
-		
+
 		if(device==null)
 			throw new IllegalArgumentException(ip+" is not a local address");
-		
+
 		//open Jpcap
 		JpcapCaptor captor=JpcapCaptor.openDevice(device,2000,false,3000);
 		captor.setFilter("arp",true);//
 		JpcapSender sender=captor.getJpcapSenderInstance(); //
-		
+
 		InetAddress srcip=null;
 		for(NetworkInterfaceAddress addr:device.addresses)
 			if(addr.address instanceof Inet4Address){
@@ -71,19 +71,19 @@ loop:	for(NetworkInterface f:listaipred){
 		System.out.println("prumer flag");
 		byte[] broadcast=new byte[]{(byte)255,(byte)255,(byte)255,(byte)255,(byte)255,(byte)255};
 		TramaARP arp=new TramaARP();
-		arp.setHardwareType(Short.parseShort(HardType));
+		arp.setHardtype(Short.parseShort(HardType));
 		arp.setOperation(Short.parseShort(operation));
-		arp.setHardwareAddressLenght(Short.valueOf((short) 6));
-		arp.setIpAddressLenght(Short.valueOf((short)4));
+		arp.setHlen(Short.valueOf((short) 6));
+		arp.setPlen(Short.valueOf((short)4));
 		/*if(!MACorigen.equals("FF:FF:FF:FF:FF:FF")){
-			arp.setSenderHardwareAddress(device.mac_address);
+			arp.setSender_hardaddr(device.mac_address);
 		}else{
-			arp.setSenderHardwareAddress(MACorigen.getBytes());
+			arp.setSender_hardaddr(MACorigen.getBytes());
 		}*/
-		arp.setSenderHardwareAddress(device.mac_address);
-		arp.setSenderIpAddress(srcip.getAddress());
-		arp.setTargetHardwareAddress(broadcast);
-		arp.setTargetIpAddress(ip.getAddress());
+		arp.setSender_hardaddr(device.mac_address);
+		arp.setSender_protoaddr(srcip.getAddress());
+		arp.setTarget_hardaddr(broadcast);
+		arp.setTarget_protoaddr(ip.getAddress());
 		EthernetPacket ether=new EthernetPacket();
 		ether.frametype=EthernetPacket.ETHERTYPE_ARP;
 		ether.src_mac=device.mac_address;
@@ -99,12 +99,12 @@ loop:	for(NetworkInterface f:listaipred){
 			if(p==null){
 				throw new IllegalArgumentException(ip+" is not a local address");
 			}
-			if(Arrays.equals(p.getTargetIpAddress(),srcip.getAddress())){
+			if(Arrays.equals(p.getTarget_protoaddr(),srcip.getAddress())){
 				return p;
 			}
 		}
 	}
-		
+
 	public static TramaARP recibirGUI(String MACorigen, String IPorigen,String MACdestino, String IPdestino,
 			String HardType, String operation) throws Exception{
 		if(IPdestino.length()<1){
@@ -115,9 +115,9 @@ loop:	for(NetworkInterface f:listaipred){
 		return null;
 	}
 	public static void main(String[] args) throws Exception{
-		
+
 			System.out.println(recibirGUI("","","","192.168.0.2","1","1"));
 			System.exit(0);
-		
+
 	}
 }
