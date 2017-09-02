@@ -1,17 +1,35 @@
-package Controller;
-
-
+import java.io.IOException;
+import java.io.ObjectInputStream.GetField;
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-import jpcap.*;
-import jpcap.packet.*;
+import jpcap.JpcapCaptor;
+import jpcap.JpcapSender;
+import jpcap.NetworkInterface;
+import jpcap.NetworkInterfaceAddress;
+import jpcap.packet.ARPPacket;
+import jpcap.packet.EthernetPacket;
+
 
 public class ARP {
-	public static byte[] arp(InetAddress ip) throws java.io.IOException{
-		System.out.println("holalalalasld");
-		//find network interface
+	static List<String> ips = new ArrayList<String>();
+	static List<String> macs = new ArrayList<String>();
+	static NetworkInterface myDevice;
+	static InetAddress pip;
+	
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		System.out.println("1");
+
+		request(TramaARP.HARDTYPE_ETHER, "", "", "192.168.0.2");
+	}
+	
+	private static void maceipPropia(InetAddress ip)
+	{
 		NetworkInterface[] devices=JpcapCaptor.getDeviceList();
 		System.out.println(devices);
 		NetworkInterface device=null;
@@ -21,7 +39,7 @@ loop:	for(NetworkInterface d:devices){
 				System.out.println(addr);
 				if(!(addr.address instanceof Inet4Address)) continue;
 				System.out.println("hola "+addr.address+" "+addr.subnet);
-				System.out.println("voy a compara con "+ip);
+				
 				byte[] bip=ip.getAddress();
 				byte[] subnet=addr.subnet.getAddress();
 				byte[] bif=addr.address.getAddress();
@@ -44,12 +62,6 @@ loop:	for(NetworkInterface d:devices){
 		
 		if(device==null)
 			throw new IllegalArgumentException(ip+" is not a local address");
-		
-		//open Jpcap
-		JpcapCaptor captor=JpcapCaptor.openDevice(device,2000,false,3000);
-		captor.setFilter("arp",true);//
-		JpcapSender sender=captor.getJpcapSenderInstance(); //
-		
 		InetAddress srcip=null;
 		for(NetworkInterfaceAddress addr:device.addresses)
 			if(addr.address instanceof Inet4Address){
@@ -57,48 +69,86 @@ loop:	for(NetworkInterface d:devices){
 				System.out.println(srcip);
 				break;
 			}
-////////////////////////////////////////////////////////////////////////
-		byte[] broadcast=new byte[]{(byte)255,(byte)255,(byte)255,(byte)255,(byte)255,(byte)255};
-		ARPPacket arp=new ARPPacket();
-		arp.hardtype=ARPPacket.HARDTYPE_ETHER;
-		arp.prototype=ARPPacket.PROTOTYPE_IP;
-		arp.operation=ARPPacket.ARP_REQUEST;
-		arp.hlen=6;
-		arp.plen=4;
-		arp.sender_hardaddr=device.mac_address;
-		arp.sender_protoaddr=srcip.getAddress();
-		arp.target_hardaddr=broadcast;
-		arp.target_protoaddr=ip.getAddress();
+		myDevice = device;
+		pip = srcip;
+		System.out.println("salgo");
+	}
+	public static   ARPPacket request(short typeH,String originMAC,String originIP,String destiniIP ) throws IOException
+	{
+		TramaARP arp = new TramaARP();
+		InetAddress target = InetAddress.getByName(destiniIP);
+		if(  pip == null )
+			maceipPropia(target);
+		
+		JpcapCaptor captor=JpcapCaptor.openDevice(myDevice,2000,false,3000);
+		captor.setFilter("arp",true);//
+		JpcapSender sender=captor.getJpcapSenderInstance(); //
+		InetAddress origin ;
+		if( originIP.equals("") )
+			origin = pip;
+		else
+			origin = InetAddress.getByName(originIP);
+		byte[] mac = null;
+		if( originMAC.equals("") )
+			mac = myDevice.mac_address;
+		arp.llenar(typeH, mac, origin, target);
+		if( !originMAC.equals("") )
+			arp.setSender_hardaddr(originMAC);
+		
 		
 		EthernetPacket ether=new EthernetPacket();
 		ether.frametype=EthernetPacket.ETHERTYPE_ARP;
-		ether.src_mac=device.mac_address;
-		ether.dst_mac=broadcast;
+		ether.src_mac=arp.sender_hardaddr;
+		ether.dst_mac=TramaARP.broadcast;
 		arp.datalink=ether;
-		
 		sender.sendPacket(arp);
-	///////////////////////////////////////////////////////////////////
+		
 		while(true){
 			ARPPacket p=(ARPPacket)captor.getPacket();
 			System.out.println(p.toString()+"\n");
 			if(p==null){
-				throw new IllegalArgumentException(ip+" is not a local address");
+				throw new IllegalArgumentException(origin+" is not a local address");
 			}
-			if(Arrays.equals(p.target_protoaddr,srcip.getAddress())){
-				return p.sender_hardaddr;
+			if(Arrays.equals(p.target_protoaddr,pip.getAddress())){
+				boolean elbool=false;
+				
+				for (int i = 0; i < macs.size(); i++) {
+					if(macs.get(i).equals(p.getSenderHardwareAddress().toString())&&ips.get(i).equals(p.getSenderProtocolAddress().toString()))
+					{
+						elbool=true;
+						break;
+					}
+					
+				}
+				if (!elbool) {
+					
+					macs.add(p.getSenderHardwareAddress().toString());
+					ips.add(p.getSenderProtocolAddress().toString());					
+				}
+				elbool = false;
+				for (int i = 0; i < macs.size(); i++) {
+					if(macs.get(i).equals(p.getTargetHardwareAddress().toString())&&ips.get(i).equals(p.getTargetProtocolAddress().toString()))
+					{
+						elbool=true;
+						break;
+					}
+					
+				}
+				if (!elbool) {
+					
+					macs.add(p.getTargetHardwareAddress().toString());
+					ips.add(p.getTargetProtocolAddress().toString());					
+				}
+				for (int i = 0; i < macs.size(); i++) {
+					System.out.println(macs.get(i) + "--->"+ ips.get(i)+"\n");
+					
+				}
+				
+				return   p;
 			}
 		}
-	}
 		
-	public static void main(String[] args) throws Exception{
-		if(args.length<1){
-			System.out.println("Usage: java ARP <ip address>");
-		}else{
-			byte[] mac=ARP.arp(InetAddress.getByName(args[0]));
-			for (byte b : mac)
-				System.out.print(Integer.toHexString(b&0xff) + ":");
-			System.out.println();
-			System.exit(0);
-		}
 	}
+	
+	
 }
