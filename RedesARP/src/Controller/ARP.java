@@ -10,6 +10,7 @@ import jpcap.packet.*;
 
 public class ARP {
 	public static byte[] arp(InetAddress ip) throws java.io.IOException{
+		System.out.println("holalalalasld");
 		//find network interface
 		NetworkInterface[] devices=JpcapCaptor.getDeviceList();
 		System.out.println(devices);
