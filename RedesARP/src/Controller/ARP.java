@@ -21,12 +21,12 @@ public class ARP {
 	static NetworkInterface myDevice;
 	static InetAddress pip;
 	
-	public static void main(String[] args) throws IOException {
+	/*public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		System.out.println("1");
 
 		request(TramaARP.HARDTYPE_ETHER, "", "", "192.168.0.2");
-	}
+	}*/
 	
 	private static void maceipPropia(InetAddress ip)
 	{

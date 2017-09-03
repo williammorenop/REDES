@@ -9,12 +9,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JComboBox;
 import javax.swing.JToggleButton;
+import javax.swing.plaf.SliderUI;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JProgressBar;
+
+import Controller.ARP;
 
 public class principal {
 
@@ -46,12 +49,13 @@ public class principal {
 	private JLabel label_4;
 	private JLabel label_5;
 	private JProgressBar progressBar43;
-
+	//private  ARP arp= new ARP();
+	private JTextField operacion;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-	 //ACA EL REQUES
+	   
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -93,23 +97,23 @@ public class principal {
 		frame.getContentPane().add(ipdesti);
 		
 		JLabel lblAsdasd = new JLabel("MAC destino");
-		lblAsdasd.setBounds(741, 277, 136, 26);
+		lblAsdasd.setBounds(747, 277, 83, 26);
 		frame.getContentPane().add(lblAsdasd);
 		
 		JLabel lblMacOrigen = new JLabel("MAC origen");
-		lblMacOrigen.setBounds(418, 277, 152, 26);
+		lblMacOrigen.setBounds(458, 277, 56, 26);
 		frame.getContentPane().add(lblMacOrigen);
 		
 		JLabel lblIpDes = new JLabel("IP destino");
-		lblIpDes.setBounds(885, 277, 105, 26);
+		lblIpDes.setBounds(907, 277, 83, 26);
 		frame.getContentPane().add(lblIpDes);
 		
 		JLabel lblIpOri = new JLabel("IP origen");
-		lblIpOri.setBounds(591, 277, 92, 26);
+		lblIpOri.setBounds(615, 277, 56, 26);
 		frame.getContentPane().add(lblIpOri);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(582, 52, 418, 216);
+		scrollPane.setBounds(487, 50, 418, 216);
 		frame.getContentPane().add(scrollPane);
 		
 		JTable tablaipmac = new JTable();
@@ -141,11 +145,6 @@ public class principal {
 		hardtype.setColumns(10);
 		hardtype.setBounds(21, 308, 105, 32);
 		frame.getContentPane().add(hardtype);
-		
-		JComboBox seloperacion = new JComboBox();
-		seloperacion.setModel(new DefaultComboBoxModel(new String[] {"Request", "Reply"}));
-		seloperacion.setBounds(292, 308, 105, 32);
-		frame.getContentPane().add(seloperacion);
 		
 		JComboBox selecmacori = new JComboBox();
 		selecmacori.setModel(new DefaultComboBoxModel(new String[] {"Otro"}));
@@ -237,12 +236,12 @@ public class principal {
 		JButton btnNewButton = new JButton("ENVIAR");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-					progressBar43.setValue(progressBar43.getValue()+1);
 					
+					//ARP.request(Short.parseShort(hardtype.getText()), selecmacori.getName(), selectipori.getName(), ipdesti.getText());
+										
 			}
 		});
-		btnNewButton.setBounds(329, 81, 217, 161);
+		btnNewButton.setBounds(165, 73, 217, 161);
 		frame.getContentPane().add(btnNewButton);
 		
 		lblNewLabel = new JLabel("Enviar");
@@ -254,11 +253,11 @@ public class principal {
 		frame.getContentPane().add(lblNewLabel_1);
 		
 		lblOpercacion = new JLabel("Operacion");
-		lblOpercacion.setBounds(292, 277, 105, 26);
+		lblOpercacion.setBounds(305, 277, 63, 26);
 		frame.getContentPane().add(lblOpercacion);
 		
 		lblHardware = new JLabel("Hardware \r\ntype");
-		lblHardware.setBounds(0, 274, 146, 32);
+		lblHardware.setBounds(31, 274, 95, 32);
 		frame.getContentPane().add(lblHardware);
 		
 		label = new JLabel("Hardware \r\ntype");
@@ -289,5 +288,12 @@ public class principal {
 	
 		progressBar43.setBounds(50, 361, 243, 14);
 		frame.getContentPane().add(progressBar43);
+		
+		operacion = new JTextField();
+		operacion.setEditable(false);
+		operacion.setText("Request");
+		operacion.setBounds(292, 308, 105, 32);
+		frame.getContentPane().add(operacion);
+		operacion.setColumns(10);
 	}
 }
