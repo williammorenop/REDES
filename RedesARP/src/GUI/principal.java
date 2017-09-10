@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Vector;
 import java.awt.event.ItemEvent;
 import java.awt.Toolkit;
+import javax.swing.JPanel;
+import java.awt.Color;
 
 public class principal {
 
@@ -93,8 +95,9 @@ public class principal {
 	 */
 	private void initialize() {
 		frmArp = new JFrame();
+	
 		frmArp.setTitle("ARP");
-		frmArp.setIconImage(Toolkit.getDefaultToolkit().getImage(".\\Arrioch-Halloween-Ghost.ico"));
+		frmArp.setIconImage(Toolkit.getDefaultToolkit().getImage(principal.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		frmArp.setBounds(100, 100, 1048, 556);
 		frmArp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmArp.getContentPane().setLayout(null);
@@ -275,11 +278,11 @@ public class principal {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				//ENVIA LA TRAMA 					
+				/**ENVIA LA TRAMA **/					
 				//ARP.request(Short.parseShort(hardtype.getText()), selecmacori.getName(), selectipori.getName(), ipdesti.getText());
-				//ACTUALIZA LOS CAMPO DE ABAJO
+				/**ACTUALIZA LOS CAMPO DE ABAJO**/
 				reci1.setText("KIKO");
-				//ORDEN
+				/**ORDEN TABLA**/
 				Vector<List<String>> columnaip = new Vector<List<String>>();
 				/*Vector<String> fila2=new Vector<String>();
 				fila2.add("192.168.0.1");
@@ -321,7 +324,11 @@ public class principal {
 				
 				tablaipmac.setModel(juliantia);
 				
-				// actualiza los selectbox
+				/** ----ACTUALIZA LOS SELECTBOX---
+				 *  PDT: AL PULSAR REPEDIDAS VECES EVIAR SE GENERAN VARIOS OTROS REVISAR 
+				 *  MOTIVO: NO VACIA LA LISTA DE ITEMS
+				 *  SOLUCION: VACIARLA CON CUIDADO DE LOS ERRORES :3 
+				**/
 				Vector<String> selemaor = new Vector<String>();
 				//selecmacori.addItem("Otro2");
 				//selecmacori.addItem("Otro3");
@@ -402,5 +409,24 @@ public class principal {
 		operacion.setBounds(292, 308, 105, 32);
 		frmArp.getContentPane().add(operacion);
 		operacion.setColumns(10);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(204, 255, 0));
+		panel.setBounds(21, 62, 107, 52);
+		frmArp.getContentPane().add(panel);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(new Color(0, 0, 255));
+		panel_2.setBounds(21, 113, 107, 32);
+		frmArp.getContentPane().add(panel_2);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(new Color(204, 0, 0));
+		panel_3.setBounds(21, 144, 107, 32);
+		frmArp.getContentPane().add(panel_3);
+		
+		JLabel label_6 = new JLabel("PRODUCTO COLOMBIANO");
+		label_6.setBounds(21, 29, 165, 32);
+		frmArp.getContentPane().add(label_6);
 	}
 }
