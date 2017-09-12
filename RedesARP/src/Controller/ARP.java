@@ -1,3 +1,5 @@
+package Controller;
+
 import java.io.IOException;
 import java.io.ObjectInputStream.GetField;
 import java.net.Inet4Address;
@@ -21,12 +23,12 @@ public class ARP {
 	static NetworkInterface myDevice;
 	static InetAddress pip;
 	
-	/*public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		System.out.println("1");
 
-		request(TramaARP.HARDTYPE_ETHER, "", "", "192.168.0.2");
-	}*/
+		request(TramaARP.HARDTYPE_ETHER, "", "", "192.168.0.5");
+	}
 	
 	private static void maceipPropia(InetAddress ip)
 	{
@@ -79,7 +81,7 @@ loop:	for(NetworkInterface d:devices){
 		InetAddress target = InetAddress.getByName(destiniIP);
 		if(  pip == null )
 			maceipPropia(target);
-		
+		System.out.println("----------a-----------");
 		JpcapCaptor captor=JpcapCaptor.openDevice(myDevice,2000,false,3000);
 		captor.setFilter("arp",true);//
 		JpcapSender sender=captor.getJpcapSenderInstance(); //
