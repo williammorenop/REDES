@@ -18,21 +18,41 @@ import jpcap.packet.EthernetPacket;
 
 
 public class ARP {
-	static List<String> ips = new ArrayList<String>();
-	static List<String> macs = new ArrayList<String>();
-	static NetworkInterface myDevice;
-	static InetAddress pip;
+	public static List<String> ips = new ArrayList<String>();
+	public static List<String> macs = new ArrayList<String>();
+	public static NetworkInterface myDevice;
+	public static InetAddress pip;
 	
-	public static void main(String[] args) throws IOException {
+	/*public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		System.out.println("1");
-
-		request(TramaARP.HARDTYPE_ETHER, "", "", "192.168.0.5");
-	}
+		//System.out.println(TramaARP.HARDTYPE_ETHER);
+		ARPPacket prueba;
+		
+		try {
+			prueba =request((short)1, "", "", "192.168.0.5");
+			System.out.println("******"+TramaARP.HARDTYPE_ETHER);
+			System.out.println("------"+prueba.toString());
+			System.out.println("------"+prueba.caplen);
+			System.out.println("------"+prueba.hardtype);
+			System.out.println("------"+prueba.operation);
+			System.out.println("------"+prueba.prototype);
+			System.out.println("------"+prueba.sec);
+			System.out.println("------"+prueba.usec);
+			System.out.println("------"+prueba.header);
+			System.out.println("-----target-"+prueba.getTargetProtocolAddress().toString());
+			System.out.println("-----sender-"+prueba.getSenderProtocolAddress().toString());
+			System.out.println("------"+prueba.getSenderProtocolAddress());
+			System.out.println("------"+prueba.target_protoaddr);	
+			
+		} catch (Exception e) {
+			System.out.println("NOOOOOOOO");// TODO: handle exception
+		}
+	}*/
 	
 	private static void maceipPropia(InetAddress ip)
 	{
-		NetworkInterface[] devices=JpcapCaptor.getDeviceList();
+		NetworkInterface[] devices = JpcapCaptor.getDeviceList();
 		System.out.println(devices);
 		NetworkInterface device=null;
 		
@@ -81,7 +101,7 @@ loop:	for(NetworkInterface d:devices){
 		InetAddress target = InetAddress.getByName(destiniIP);
 		if(  pip == null )
 			maceipPropia(target);
-		System.out.println("----------a-----------");
+		//System.out.println("----------a-----------");
 		JpcapCaptor captor=JpcapCaptor.openDevice(myDevice,2000,false,3000);
 		captor.setFilter("arp",true);//
 		JpcapSender sender=captor.getJpcapSenderInstance(); //

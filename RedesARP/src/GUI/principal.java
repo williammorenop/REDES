@@ -21,7 +21,10 @@ import javax.swing.table.TableModel;
 import javax.swing.JProgressBar;
 
 import Controller.ARP;
+import jpcap.packet.ARPPacket;
+
 import java.awt.event.ItemListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -216,7 +219,7 @@ public class principal {
 		frmArp.getContentPane().add(textField_16);
 		
 		reci1 = new JTextField();
-		reci1.setEnabled(false);
+		reci1.setEditable(false);
 		reci1.setColumns(10);
 		reci1.setBounds(21, 460, 105, 32);
 		frmArp.getContentPane().add(reci1);
@@ -245,19 +248,19 @@ public class principal {
 		frmArp.getContentPane().add(reci4);
 		
 		reci5 = new JTextField();
-		reci5.setEnabled(false);
+		reci5.setEditable(false);
 		reci5.setColumns(10);
 		reci5.setBounds(292, 460, 105, 32);
 		frmArp.getContentPane().add(reci5);
 		
 		reci6 = new JTextField();
-		reci6.setEnabled(false);
+		reci6.setEditable(false);
 		reci6.setColumns(10);
 		reci6.setBounds(399, 460, 179, 32);
 		frmArp.getContentPane().add(reci6);
 		
 		reci7 = new JTextField();
-		reci7.setEnabled(false);
+		reci7.setEditable(false);
 		reci7.setColumns(10);
 		reci7.setBounds(582, 460, 118, 32);
 		frmArp.getContentPane().add(reci7);
@@ -277,11 +280,33 @@ public class principal {
 		JButton btnNewButton = new JButton("ENVIAR");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				/**ENVIA LA TRAMA **/					
+				ARPPacket prueba = null;
+				/**ENVIA LA TRAMA **/	
+				try {
+					prueba =ARP.request(Short.parseShort(hardtype.getText()), "", "", ipdesti.getText());
+					//progressBar43.
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				//ARP.request(Short.parseShort(hardtype.getText()), selecmacori.getName(), selectipori.getName(), ipdesti.getText());
 				/**ACTUALIZA LOS CAMPO DE ABAJO**/
-				reci1.setText("KIKO");
+				reci1.setText(String.valueOf(prueba.hardtype));
+				//reci2.setText("KIKO");
+				//reci3.setText("KIKO");
+				reci5.setText("REPLY");
+				reci6.setText((String) prueba.getSenderHardwareAddress());
+				reci7.setText( prueba.getSenderProtocolAddress().toString());
+				reci8.setText((String) prueba.getTargetHardwareAddress());
+				reci9.setText(prueba.getTargetProtocolAddress().toString());
+				
+				for (int a=0; a<ARP.ips.size();a++) {
+					System.out.println(ARP.ips.get(a).toString());
+					
+				}
 				/**ORDEN TABLA**/
 				Vector<List<String>> columnaip = new Vector<List<String>>();
 				/*Vector<String> fila2=new Vector<String>();
@@ -289,23 +314,10 @@ public class principal {
 				fila2.add("A6.B6.00.56");
 				//columnaip.add(fila);
 				//fila.clear();*/
-				for (int i = 0; i < 10; i++) {
+				for (int i = 0; i < ARP.ips.size(); i++) {
 					Vector<String> fila=new Vector<String>();
-					
-					if (i==1) {
-						fila.add("192.168.0.2");
-						fila.add("A6.B6.00.C4");
-					}
-					else if(i%2==0)
-					{
-						fila.add("192.168.0.3");
-						fila.add("A6.B6.00.5B");
-					}
-					else
-					{
-						fila.add("192.168.0.4");
-						fila.add("A6.B6.00.AA");
-					}
+						fila.add(ARP.ips.get(i).toString());
+						fila.add(ARP.macs.get(i).toString());				
 					columnaip.add(fila);					
 				}
 				//fila.clear();
@@ -327,32 +339,47 @@ public class principal {
 				/** ----ACTUALIZA LOS SELECTBOX---
 				 *  PDT: AL PULSAR REPEDIDAS VECES EVIAR SE GENERAN VARIOS OTROS REVISAR 
 				 *  MOTIVO: NO VACIA LA LISTA DE ITEMS
-				 *  SOLUCION: VACIARLA CON CUIDADO DE LOS ERRORES :3 
+				 *  SOLUCION: VACIARLA CON CUIDADO DE LOS ERRORES
+				 *  SOLUCIONADO!!!!
 				**/
 				Vector<String> selemaor = new Vector<String>();
+				Vector<String> seleipor = new Vector<String>();
 				//selecmacori.addItem("Otro2");
 				//selecmacori.addItem("Otro3");
 				//selecmacori.addItem("Otro");
 				//selectipori.removeAllItems();
-				System.out.println(selecmacori.getComponentCount());
+				//System.out.println(selecmacori.getComponentCount());
 				//selecmacori.remove(1);
 				//selecmacori.removeAll();
 				//selecmacori.updateUI();
-				System.out.println(selecmacori.getComponentCount());
+				//System.out.println(selecmacori.getComponentCount());
 				
 				//selecmacori.remove(0);
 
-				for (int i = 0; i < 10; i++) {
+				//selecmacori.removeAllItems();
+				//selecmacori.removeAll();
+				for (int i = 0; i < columnaip.size(); i++) {
 					selemaor.add(columnaip.get(i).get(1));
-					selecmacori.addItem(columnaip.get(i).get(1));
+					seleipor.add(columnaip.get(i).get(0));
+					//selecmacori.addItem(columnaip.get(i).get(1));
+					//selectipori.addItem(columnaip.get(i).get(0));
 				}
-				selecmacori.addItem("Otro");
-				selecmacori.removeItemAt(0);
-				selecmacori.removeItemAt(0);
+				
+				//selecmacori.removeItemAt(0);
+				//selecmacori.removeItemAt(0);
+				//selectipori.addItem("Otro");
+				//selectipori.removeItemAt(0);
+				//selectipori.removeItemAt(0);
+				System.out.println(selecmacori.getComponentCount());
 				//ComboBoxModel lllll=new ComboBoxModel(selemaor) ;
 				
-				//selecmacori.setModel(new DefaultComboBoxModel(selemaor));
-
+				selecmacori.setModel(new DefaultComboBoxModel(selemaor));
+				selecmacori.addItem("Otro");
+				
+				selectipori.setModel(new DefaultComboBoxModel(seleipor));
+				selectipori.addItem("Otro");
+				
+				
 			}
 		});
 		btnNewButton.setBounds(165, 73, 217, 161);
