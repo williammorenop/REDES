@@ -32,6 +32,8 @@ import java.awt.event.ItemEvent;
 import java.awt.Toolkit;
 import javax.swing.JPanel;
 import java.awt.Color;
+import javax.swing.ImageIcon;
+import java.awt.Font;
 
 public class principal {
 
@@ -61,7 +63,6 @@ public class principal {
 	private JLabel label_3;
 	private JLabel label_4;
 	private JLabel label_5;
-	private JProgressBar progressBar43;
 	//private  ARP arp= new ARP();
 	private JTextField operacion;
 	private JComboBox selecmacori;
@@ -69,6 +70,8 @@ public class principal {
 	private JTextField macdesti;
 	private JTextField ipdesti;
 	private JTextField reci9;
+	private JLabel lblNewLabel_4;
+	private JLabel lblArp;
 	/**
 	 * Launch the application.
 	 */
@@ -100,10 +103,21 @@ public class principal {
 		frmArp = new JFrame();
 	
 		frmArp.setTitle("ARP");
-		frmArp.setIconImage(Toolkit.getDefaultToolkit().getImage(principal.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
-		frmArp.setBounds(100, 100, 1048, 556);
+		frmArp.setIconImage(Toolkit.getDefaultToolkit().getImage(".\\Categories-applications-internet-icon (1).png"));
+		frmArp.setBounds(100, 100, 1056, 556);
 		frmArp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmArp.getContentPane().setLayout(null);
+		
+		lblArp = new JLabel("Address Resolution Protocol (ARP)");
+		lblArp.setForeground(Color.WHITE);
+		lblArp.setFont(new Font("SansSerif", Font.BOLD, 21));
+		lblArp.setBounds(292, 6, 508, 32);
+		frmArp.getContentPane().add(lblArp);
+		
+		lblNewLabel_4 = new JLabel("New label");
+		lblNewLabel_4.setIcon(new ImageIcon(".\\2017-15-09-16-34-53.jpeg"));
+		lblNewLabel_4.setBounds(947, 0, 95, 94);
+		frmArp.getContentPane().add(lblNewLabel_4);
 		
 		macdesti = new JTextField();
 		macdesti.setEditable(false);
@@ -118,23 +132,35 @@ public class principal {
 		frmArp.getContentPane().add(ipdesti);
 		
 		JLabel lblAsdasd = new JLabel("MAC destino");
-		lblAsdasd.setBounds(747, 277, 83, 26);
+		lblAsdasd.setForeground(Color.WHITE);
+		lblAsdasd.setBackground(Color.WHITE);
+		lblAsdasd.setFont(new Font("SansSerif", Font.BOLD, 13));
+		lblAsdasd.setBounds(704, 277, 83, 26);
 		frmArp.getContentPane().add(lblAsdasd);
 		
 		JLabel lblMacOrigen = new JLabel("MAC origen");
-		lblMacOrigen.setBounds(458, 277, 74, 26);
+		lblMacOrigen.setBackground(Color.WHITE);
+		lblMacOrigen.setFont(new Font("SansSerif", Font.BOLD, 13));
+		lblMacOrigen.setForeground(Color.WHITE);
+		lblMacOrigen.setBounds(400, 277, 74, 26);
 		frmArp.getContentPane().add(lblMacOrigen);
 		
 		JLabel lblIpDes = new JLabel("IP destino");
-		lblIpDes.setBounds(907, 277, 83, 26);
+		lblIpDes.setForeground(Color.WHITE);
+		lblIpDes.setBackground(Color.WHITE);
+		lblIpDes.setFont(new Font("SansSerif", Font.BOLD, 13));
+		lblIpDes.setBounds(885, 277, 83, 26);
 		frmArp.getContentPane().add(lblIpDes);
 		
 		JLabel lblIpOri = new JLabel("IP origen");
-		lblIpOri.setBounds(615, 277, 56, 26);
+		lblIpOri.setBackground(Color.WHITE);
+		lblIpOri.setFont(new Font("SansSerif", Font.BOLD, 13));
+		lblIpOri.setForeground(Color.WHITE);
+		lblIpOri.setBounds(582, 277, 74, 26);
 		frmArp.getContentPane().add(lblIpOri);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(487, 50, 418, 216);
+		scrollPane.setBounds(104, 49, 418, 216);
 		frmArp.getContentPane().add(scrollPane);
 		
 		JTable tablaipmac = new JTable();
@@ -278,12 +304,13 @@ public class principal {
 		frmArp.getContentPane().add(reci9);
 		
 		JButton btnNewButton = new JButton("ENVIAR");
+		btnNewButton.setFont(new Font("SansSerif", Font.BOLD, 24));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ARPPacket prueba = null;
 				/**ENVIA LA TRAMA **/	
-				try {
-					prueba =ARP.request(Short.parseShort(hardtype.getText()), "", "", ipdesti.getText());
+				/*try {
+					//prueba =ARP.request(Short.parseShort(hardtype.getText()), "", "", ipdesti.getText());
 					//progressBar43.
 				} catch (NumberFormatException e) {
 					// TODO Auto-generated catch block
@@ -291,7 +318,7 @@ public class principal {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+				}*/
 				//ARP.request(Short.parseShort(hardtype.getText()), selecmacori.getName(), selectipori.getName(), ipdesti.getText());
 				/**ACTUALIZA LOS CAMPO DE ABAJO**/
 				reci1.setText(String.valueOf(prueba.hardtype));
@@ -382,53 +409,75 @@ public class principal {
 				
 			}
 		});
-		btnNewButton.setBounds(165, 73, 217, 161);
+		btnNewButton.setBounds(650, 84, 217, 134);
 		frmArp.getContentPane().add(btnNewButton);
 		
 		lblNewLabel = new JLabel("Enviar");
-		lblNewLabel.setBounds(21, 235, 92, 26);
+		lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 15));
+		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setBounds(21, 239, 92, 26);
 		frmArp.getContentPane().add(lblNewLabel);
 		
 		lblNewLabel_1 = new JLabel("Recibir");
+		lblNewLabel_1.setForeground(Color.WHITE);
+		lblNewLabel_1.setBackground(Color.WHITE);
+		lblNewLabel_1.setFont(new Font("SansSerif", Font.BOLD, 15));
 		lblNewLabel_1.setBounds(21, 391, 92, 26);
 		frmArp.getContentPane().add(lblNewLabel_1);
 		
 		lblOpercacion = new JLabel("Operacion");
-		lblOpercacion.setBounds(305, 277, 63, 26);
+		lblOpercacion.setFont(new Font("SansSerif", Font.BOLD, 13));
+		lblOpercacion.setForeground(Color.WHITE);
+		lblOpercacion.setBounds(305, 277, 74, 26);
 		frmArp.getContentPane().add(lblOpercacion);
 		
 		lblHardware = new JLabel("Hardware \r\ntype");
-		lblHardware.setBounds(31, 274, 95, 32);
+		lblHardware.setFont(new Font("SansSerif", Font.BOLD, 13));
+		lblHardware.setForeground(Color.WHITE);
+		lblHardware.setBounds(21, 274, 95, 32);
 		frmArp.getContentPane().add(lblHardware);
 		
 		label = new JLabel("Hardware \r\ntype");
-		label.setBounds(0, 427, 146, 32);
+		label.setForeground(Color.WHITE);
+		label.setBackground(Color.WHITE);
+		label.setFont(new Font("SansSerif", Font.BOLD, 13));
+		label.setBounds(21, 427, 146, 32);
 		frmArp.getContentPane().add(label);
 		
 		label_1 = new JLabel("Operacion");
+		label_1.setForeground(Color.WHITE);
+		label_1.setBackground(Color.WHITE);
+		label_1.setFont(new Font("SansSerif", Font.BOLD, 13));
 		label_1.setBounds(292, 430, 105, 26);
 		frmArp.getContentPane().add(label_1);
 		
 		label_2 = new JLabel("MAC origen");
-		label_2.setBounds(418, 430, 152, 26);
+		label_2.setForeground(Color.WHITE);
+		label_2.setBackground(Color.WHITE);
+		label_2.setFont(new Font("SansSerif", Font.BOLD, 13));
+		label_2.setBounds(400, 430, 152, 26);
 		frmArp.getContentPane().add(label_2);
 		
 		label_3 = new JLabel("IP origen");
-		label_3.setBounds(591, 430, 92, 26);
+		label_3.setForeground(Color.WHITE);
+		label_3.setBackground(Color.WHITE);
+		label_3.setFont(new Font("SansSerif", Font.BOLD, 13));
+		label_3.setBounds(582, 430, 92, 26);
 		frmArp.getContentPane().add(label_3);
 		
 		label_4 = new JLabel("MAC destino");
-		label_4.setBounds(741, 430, 136, 26);
+		label_4.setForeground(Color.WHITE);
+		label_4.setBackground(Color.WHITE);
+		label_4.setFont(new Font("SansSerif", Font.BOLD, 13));
+		label_4.setBounds(709, 430, 136, 26);
 		frmArp.getContentPane().add(label_4);
 		
 		label_5 = new JLabel("IP destino");
-		label_5.setBounds(885, 430, 105, 26);
+		label_5.setForeground(Color.WHITE);
+		label_5.setBackground(Color.WHITE);
+		label_5.setFont(new Font("SansSerif", Font.BOLD, 13));
+		label_5.setBounds(887, 430, 105, 26);
 		frmArp.getContentPane().add(label_5);
-		
-		progressBar43 = new JProgressBar();
-	
-		progressBar43.setBounds(50, 361, 243, 14);
-		frmArp.getContentPane().add(progressBar43);
 		
 		operacion = new JTextField();
 		operacion.setEditable(false);
@@ -437,23 +486,9 @@ public class principal {
 		frmArp.getContentPane().add(operacion);
 		operacion.setColumns(10);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(204, 255, 0));
-		panel.setBounds(21, 62, 107, 52);
-		frmArp.getContentPane().add(panel);
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(0, 0, 255));
-		panel_2.setBounds(21, 113, 107, 32);
-		frmArp.getContentPane().add(panel_2);
-		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(new Color(204, 0, 0));
-		panel_3.setBounds(21, 144, 107, 32);
-		frmArp.getContentPane().add(panel_3);
-		
-		JLabel label_6 = new JLabel("PRODUCTO COLOMBIANO");
-		label_6.setBounds(21, 29, 165, 32);
-		frmArp.getContentPane().add(label_6);
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setIcon(new ImageIcon(".\\2017-15-09-16-54-31.jpeg"));
+		lblNewLabel_2.setBounds(0, 0, 1042, 517);
+		frmArp.getContentPane().add(lblNewLabel_2);
 	}
 }
