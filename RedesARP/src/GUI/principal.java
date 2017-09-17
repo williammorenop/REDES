@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JComboBox;
@@ -186,12 +187,13 @@ public class principal {
 		frmArp.getContentPane().add(textField_3);
 		
 		hardtype = new JTextField();
+		hardtype.setText("1");
 		hardtype.setColumns(10);
 		hardtype.setBounds(21, 308, 105, 32);
 		frmArp.getContentPane().add(hardtype);
 		
 		selecmacori = new JComboBox();
-		selecmacori.setModel(new DefaultComboBoxModel(new String[] {"Temp", "Otro"}));
+		selecmacori.setModel(new DefaultComboBoxModel(new String[] {"", "Otro"}));
 		selecmacori.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				if(selecmacori.getSelectedItem().equals("Otro"))
@@ -226,7 +228,7 @@ public class principal {
 				}
 			}
 		});
-		selectipori.setModel(new DefaultComboBoxModel(new String[] {"Temp","Otro"}));
+		selectipori.setModel(new DefaultComboBoxModel(new String[] {"", "Otro"}));
 		selectipori.setBounds(582, 308, 118, 32);
 		frmArp.getContentPane().add(selectipori);
 		
@@ -307,18 +309,50 @@ public class principal {
 		btnNewButton.setFont(new Font("SansSerif", Font.BOLD, 24));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+
 				ARPPacket prueba = null;
 				/**ENVIA LA TRAMA **/	
-				/*try {
+				try {
+					String macorig="";
+					String iporig="";
+					if(!selecmacori.getSelectedItem().toString().equals("Otro"))
+					{
+						macorig=selecmacori.getSelectedItem().toString();
+					}
+					else
+					{
+						macorig="";
+						macorig+=macori.getText().toString();
+					}
+					//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					if(!selectipori.getSelectedItem().toString().equals("Otro"))
+					{
+						iporig=selectipori.getSelectedItem().toString();
+					}
+					else
+					{
+						iporig="/";
+						iporig+=iporigi.getText().toString();
+					}
+					
+					
+					System.out.println("{{{{{{{{{{{"+macorig+"*****"+iporig);
+					prueba =ARP.request(Short.parseShort(hardtype.getText()), macorig, iporig, ipdesti.getText());
 					//prueba =ARP.request(Short.parseShort(hardtype.getText()), "", "", ipdesti.getText());
+
 					//progressBar43.
-				} catch (NumberFormatException e) {
-					// TODO Auto-generated catch block
+				} catch(IllegalArgumentException e) {
+					
+					
+					JOptionPane.showMessageDialog(null,e.getMessage(),"ERROR!!!!!!",JOptionPane.ERROR_MESSAGE); //Tipo de mensaje
 					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
+
+				}catch (IOException e) {
+					
+					JOptionPane.showMessageDialog(null,"Ooops, algo salió mal.","ERROR!!!!!!",JOptionPane.ERROR_MESSAGE); //Tipo de mensaje
 					e.printStackTrace();
-				}*/
+				}
 				//ARP.request(Short.parseShort(hardtype.getText()), selecmacori.getName(), selectipori.getName(), ipdesti.getText());
 				/**ACTUALIZA LOS CAMPO DE ABAJO**/
 				reci1.setText(String.valueOf(prueba.hardtype));
@@ -358,7 +392,7 @@ public class principal {
 				//fila.clear();*/
 				
 				Vector<String> name = new Vector<String>();
-				name.add("IP2");name.add("MAC2");	
+				name.add("IP");name.add("MAC");	
 				TableModel juliantia=new DefaultTableModel( columnaip,name);
 				
 				tablaipmac.setModel(juliantia);

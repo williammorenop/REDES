@@ -106,10 +106,18 @@ loop:	for(NetworkInterface d:devices){
 		captor.setFilter("arp",true);//
 		JpcapSender sender=captor.getJpcapSenderInstance(); //
 		InetAddress origin ;
+		System.out.println("1..."+originIP);
 		if( originIP.equals("") )
 			origin = pip;
 		else
-			origin = InetAddress.getByName(originIP);
+		{  
+			System.out.println("2...");
+			//origin = InetAddress.getByName(originIP);
+			origin = InetAddress.getByName(originIP.substring(1, originIP.length()));
+
+			System.out.println("3..."+origin.toString());
+			
+		}
 		byte[] mac = null;
 		if( originMAC.equals("") )
 			mac = myDevice.mac_address;
@@ -123,19 +131,27 @@ loop:	for(NetworkInterface d:devices){
 		ether.src_mac=arp.sender_hardaddr;
 		ether.dst_mac=TramaARP.broadcast;
 		arp.datalink=ether;
+		System.out.println("ASI QUEDO ANTES" +arp.toString());
 		sender.sendPacket(arp);
+		System.out.println("ASI QUEDO DESPUES" +arp.toString());
 		
 		while(true){
 			ARPPacket p=(ARPPacket)captor.getPacket();
-			System.out.println(p.toString()+"\n");
 			if(p==null){
-				throw new IllegalArgumentException(origin+" is not a local address");
+				throw new IllegalArgumentException(origin +" o "+target+" NO es una direccion local");
 			}
-			if(Arrays.equals(p.target_protoaddr,pip.getAddress())){
+			System.out.println("[[[While true]]]"+p.toString()+"-----"+pip.getAddress()+"++target++++"+p.target_protoaddr+"\n");
+		
+			if(Arrays.equals(p.target_protoaddr,origin.getAddress())){
 				boolean elbool=false;
-				
-				for (int i = 0; i < macs.size(); i++) {
-					if(macs.get(i).equals(p.getSenderHardwareAddress().toString())&&ips.get(i).equals(p.getSenderProtocolAddress().toString()))
+				System.out.println("ENTRE PUES PAPA\n");
+				if(TramaARP.broadcast.toString().equals(p.getSenderHardwareAddress().toString()))
+						{
+						elbool=true;
+						}
+				for (int i = 0; i < macs.size() && !elbool; i++) {
+					System.out.println("''''''''''''''''''''''''''"+TramaARP.broadcast.toString()+ "---"+p.getSenderHardwareAddress().toString());
+					if(macs.get(i).equals(p.getSenderHardwareAddress().toString())&&ips.get(i).equals(p.getSenderProtocolAddress().toString())  )
 					{
 						elbool=true;
 						break;
@@ -147,9 +163,14 @@ loop:	for(NetworkInterface d:devices){
 					macs.add(p.getSenderHardwareAddress().toString());
 					ips.add(p.getSenderProtocolAddress().toString());					
 				}
+				
 				elbool = false;
-				for (int i = 0; i < macs.size(); i++) {
-					if(macs.get(i).equals(p.getTargetHardwareAddress().toString())&&ips.get(i).equals(p.getTargetProtocolAddress().toString()))
+				if(TramaARP.broadcast.toString().equals(p.getTargetHardwareAddress().toString()))
+						{
+						elbool=true;
+						}
+				for (int i = 0; i < macs.size() && !elbool; i++) {
+					if(macs.get(i).equals(p.getTargetHardwareAddress().toString())&&ips.get(i).equals(p.getTargetProtocolAddress().toString()) )
 					{
 						elbool=true;
 						break;

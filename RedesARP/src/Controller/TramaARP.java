@@ -37,18 +37,20 @@ public class TramaARP extends ARPPacket {
 	      sender_hardaddr[ pos ] = convertString(tokens.nextElement().toString());;
 	      pos++;
 	    }
+	    System.out.println("'''''''"+_sender_hardaddr+"--------->"+sender_hardaddr);
 	  }
 	  private byte castChar( char a )
 	  {
-	    if( a >= '0' && a < 10 )
+	    if( a >= '0' && a <= '9' )
 	      return (byte) (a-'0');
 	    return (byte) ((a-'a')+10);
 	  }
 	  private byte convertString( String hex )
 	  {
 	    char left = hex.charAt(0);
-	    char right = hex.charAt(1) ;
-	    return (byte) ((castChar( left )<<4)|castChar(left));
+	    char right = hex.charAt(1);
+	    System.out.println(left+"}}}}"+right+"cascas"+castChar( left)+"cascas2"+castChar( right));
+	    return (byte) ((castChar( left)<<4)|castChar(right));
 	  }
 	  //------------------
 	  private char hexUpperChar(byte b) {
