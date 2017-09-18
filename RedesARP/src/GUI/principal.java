@@ -54,12 +54,13 @@ public class principal {
 	private JLabel label_1;
 	private JLabel label_2;
 	private JLabel label_3;
+	
 	private JLabel label_4;
 	private JLabel label_5;
 	//private  ARP arp= new ARP();
 	private JTextField operacion;
-	private JComboBox selecmacori;
-	private JComboBox selectipori;
+	private JComboBox<String> selecmacori;
+	private JComboBox<String> selectipori;
 	private JTextField macdesti;
 	private JTextField ipdesti;
 	private JTextField reci9;

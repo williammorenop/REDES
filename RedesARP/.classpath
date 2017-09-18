@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="W:/temporal mauro/CARRO HEMANO/REDES/jpcap (1).jar"/>
+	<classpathentry exported="true" kind="lib" path="D:/REDES 2017 - 3/PREREQUISITOS PROY/jpcap (1).jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_144 x86"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
