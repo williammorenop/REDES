@@ -8,7 +8,7 @@ import jpcap.packet.ARPPacket;
 public class TramaARP extends ARPPacket {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	static  byte[] broadcast=new byte[]{(byte)255,(byte)255,(byte)255,(byte)255,(byte)255,(byte)255};
@@ -23,9 +23,9 @@ public class TramaARP extends ARPPacket {
 			this.target_protoaddr = destiniIP.getAddress();
 			this.target_hardaddr = broadcast;
 			this.sender_hardaddr = originMAC;
-			
+
 		}
-	
+
 	  //Cuando llega en string
 	  public void setSender_hardaddr(String _sender_hardaddr)
 	  {
@@ -37,7 +37,7 @@ public class TramaARP extends ARPPacket {
 	      sender_hardaddr[ pos ] = convertString(tokens.nextElement().toString());;
 	      pos++;
 	    }
-	    System.out.println("'''''''"+_sender_hardaddr+"--------->"+sender_hardaddr);
+	    //System.out.println("'''''''"+_sender_hardaddr+"--------->"+sender_hardaddr);
 	  }
 	  private byte castChar( char a )
 	  {
@@ -49,7 +49,7 @@ public class TramaARP extends ARPPacket {
 	  {
 	    char left = hex.charAt(0);
 	    char right = hex.charAt(1);
-	    System.out.println(left+"}}}}"+right+"cascas"+castChar( left)+"cascas2"+castChar( right));
+	    //System.out.println(left+"}}}}"+right+"cascas"+castChar( left)+"cascas2"+castChar( right));
 	    return (byte) ((castChar( left)<<4)|castChar(right));
 	  }
 	  //------------------
