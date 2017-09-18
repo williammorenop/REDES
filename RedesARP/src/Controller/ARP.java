@@ -125,13 +125,25 @@ loop:	for(NetworkInterface d:devices){
 		if( !originMAC.equals("") )
 			arp.setSender_hardaddr(originMAC);
 
-
+		
 		EthernetPacket ether=new EthernetPacket();
+		//ether.dst_mac=new byte[]{(byte)47,(byte)47,(byte)47,(byte)4,(byte)4,(byte)149};
 		ether.frametype=EthernetPacket.ETHERTYPE_ARP;
 		ether.src_mac=arp.sender_hardaddr;
 		ether.dst_mac=TramaARP.broadcast;
+		//ether.dst_mac=new byte[]{(byte)0,(byte)224,(byte)76,(byte)104,(byte)4,(byte)149};
+		
 		arp.datalink=ether;
-		//System.out.println("ASI QUEDO ANTES" +arp.toString());
+		String asd="adasdasd";
+		arp.data=asd.getBytes();
+		arp.header=asd.getBytes();
+		//arp.data=new byte[]{(byte)47};
+		//System.out.println(asd.getBytes() +"--"+Arrays.toString(arp.data));
+		//ether
+		//arp.header=new byte[]{(byte)0,(byte)224,(byte)76,(byte)104,(byte)4,(byte)149};
+		 System.out.println("ASI QUEDO ANTES" +arp.toString());
+		 System.out.println("ASI QUEDO ANTES2 " +ether.toString());
+			
 		sender.sendPacket(arp);
 		//System.out.println("ASI QUEDO DESPUES" +arp.toString());
 

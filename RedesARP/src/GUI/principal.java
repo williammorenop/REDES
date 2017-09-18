@@ -568,16 +568,16 @@ public class principal {
 		label_7.setFont(new Font("SansSerif", Font.BOLD, 13));
 		label_7.setBounds(192, 427, 46, 32);
 		frmArp.getContentPane().add(label_7);
-
-		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon(".\\2017-15-09-16-54-31.jpeg"));
-		lblNewLabel_2.setBounds(0, 0, 1042, 517);
-		frmArp.getContentPane().add(lblNewLabel_2);
 		
 		label_8 = new JLabel("PLEN");
 		label_8.setForeground(Color.WHITE);
 		label_8.setFont(new Font("SansSerif", Font.BOLD, 13));
 		label_8.setBounds(242, 427, 46, 32);
 		frmArp.getContentPane().add(label_8);
+
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setIcon(new ImageIcon(".\\2017-15-09-16-54-31.jpeg"));
+		lblNewLabel_2.setBounds(0, 0, 1042, 517);
+		frmArp.getContentPane().add(lblNewLabel_2);
 	}
 }
