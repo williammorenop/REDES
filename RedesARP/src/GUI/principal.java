@@ -182,7 +182,6 @@ public class principal {
 		scrollPane.setViewportView(tablaipmac);
 
 		textField_2 = new JTextField();
-		textField_2.setEditable(false);
 		textField_2.setText("6");
 		textField_2.setToolTipText("");
 		textField_2.setColumns(10);
@@ -191,7 +190,6 @@ public class principal {
 
 		textField_3 = new JTextField();
 		textField_3.setText("2048");
-		textField_3.setEditable(false);
 		textField_3.setColumns(10);
 		textField_3.setBounds(130, 308, 56, 32);
 		frmArp.getContentPane().add(textField_3);
@@ -249,7 +247,6 @@ public class principal {
 		frmArp.getContentPane().add(iporigi);
 
 		textField_16 = new JTextField();
-		textField_16.setEditable(false);
 		textField_16.setToolTipText("");
 		textField_16.setText("4");
 		textField_16.setColumns(10);
@@ -534,7 +531,6 @@ public class principal {
 		frmArp.getContentPane().add(label_5);
 
 		operacion = new JTextField();
-		operacion.setEditable(false);
 		operacion.setText("Request");
 		operacion.setBounds(292, 308, 105, 32);
 		frmArp.getContentPane().add(operacion);

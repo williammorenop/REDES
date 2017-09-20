@@ -71,10 +71,10 @@ loop:	for(NetworkInterface d:devices){
 					//System.out.println("--"+bip[2]+" "+bif[2]+" " );
 					device=d;
 					//System.out.println("Empieza");
-					for( NetworkInterfaceAddress adr :device.addresses)
+					/*for( NetworkInterfaceAddress adr :device.addresses)
 					{
 						//System.out.println(adr.address);
-					}
+					}*/
 					break loop;
 				}
 			}
@@ -139,8 +139,8 @@ loop:	for(NetworkInterface d:devices){
 		//System.out.println(asd.getBytes() +"--"+Arrays.toString(arp.data));
 		//ether
 		//arp.header=new byte[]{(byte)0,(byte)224,(byte)76,(byte)104,(byte)4,(byte)149};
-		 System.out.println("ASI QUEDO ANTES" +arp.toString());
-		 System.out.println("ASI QUEDO ANTES2 " +ether.toString());
+		// System.out.println("ASI QUEDO ANTES" +arp.toString());
+		 //System.out.println("ASI QUEDO ANTES2 " +ether.toString());
 			
 		sender.sendPacket(arp);
 		//System.out.println("ASI QUEDO DESPUES" +arp.toString());
